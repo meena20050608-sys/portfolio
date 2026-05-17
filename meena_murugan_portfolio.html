@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --lilac-50:#f5f0ff;
+    --lilac-100:#ede5ff;
+    --lilac-200:#d8c8ff;
+    --lilac-300:#be9eff;
+    --lilac-400:#a375f5;
+    --lilac-500:#8b52e8;
+    --lilac-600:#7535cc;
+    --lilac-700:#5e26a8;
+    --lilac-800:#4a1d85;
+    --lilac-900:#321360;
+    --text-dark:#2a1a4a;
+    --text-mid:#5c4a7a;
+    --text-light:#8b78a8;
+  }
+  body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--text-dark);overflow-x:hidden}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--lilac-100);
+    padding:0 2rem;
+    display:flex;align-items:center;justify-content:space-between;height:60px;
+  }
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--lilac-700);font-weight:700;letter-spacing:-0.5px}
+  .nav-links{display:flex;gap:2rem}
+  .nav-links a{text-decoration:none;color:var(--text-mid);font-size:0.875rem;font-weight:500;transition:color 0.2s;cursor:pointer}
+  .nav-links a:hover{color:var(--lilac-600)}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    background:linear-gradient(135deg,var(--lilac-50) 0%,#f8f4ff 40%,var(--lilac-100) 100%);
+    display:flex;align-items:center;justify-content:center;
+    padding:5rem 2rem 3rem;
+    position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;top:-100px;right:-100px;
+    width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,var(--lilac-200) 0%,transparent 70%);
+    opacity:0.5;
+  }
+  .hero::after{
+    content:'';position:absolute;bottom:-80px;left:-80px;
+    width:350px;height:350px;border-radius:50%;
+    background:radial-gradient(circle,var(--lilac-200) 0%,transparent 70%);
+    opacity:0.4;
+  }
+  .hero-inner{
+    max-width:1000px;width:100%;
+    display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:center;
+    position:relative;z-index:1;
+  }
+  .hero-photo-wrap{position:relative;display:flex;justify-content:center}
+  .hero-photo-wrap::before{
+    content:'';position:absolute;
+    width:280px;height:280px;border-radius:50%;
+    background:var(--lilac-200);
+    top:50%;left:50%;transform:translate(-50%,-50%);
+    z-index:0;
+  }
+  .hero-photo{
+    width:230px;height:230px;
+    border-radius:50%;
+    object-fit:cover;object-position:top;
+    border:5px solid white;
+    box-shadow:0 20px 60px rgba(139,82,232,0.25);
+    position:relative;z-index:1;
+  }
+  .badge-float{
+    position:absolute;bottom:10px;right:0px;
+    background:var(--lilac-600);color:white;
+    font-size:0.72rem;font-weight:600;
+    padding:6px 14px;border-radius:20px;
+    letter-spacing:0.5px;z-index:2;
+    box-shadow:0 4px 16px rgba(117,53,204,0.4);
+  }
+  .hero-text h1{
+    font-family:'Playfair Display',serif;
+    font-size:3.2rem;line-height:1.1;
+    color:var(--text-dark);
+    font-weight:700;margin-bottom:0.4rem;
+  }
+  .hero-text h1 span{color:var(--lilac-600)}
+  .hero-subtitle{
+    font-size:1.05rem;color:var(--text-mid);
+    font-weight:400;margin-bottom:1.5rem;
+    letter-spacing:0.2px;
+  }
+  .hero-bio{
+    font-size:0.95rem;line-height:1.8;color:var(--text-mid);
+    margin-bottom:2rem;max-width:480px;
+  }
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--lilac-600);color:white;
+    padding:12px 24px;border-radius:50px;
+    text-decoration:none;font-weight:600;font-size:0.9rem;
+    box-shadow:0 6px 24px rgba(117,53,204,0.35);
+    transition:all 0.2s;border:none;cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--lilac-700);transform:translateY(-1px)}
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:white;color:var(--lilac-600);
+    padding:12px 24px;border-radius:50px;
+    text-decoration:none;font-weight:600;font-size:0.9rem;
+    border:2px solid var(--lilac-200);
+    transition:all 0.2s;cursor:pointer;
+  }
+  .btn-secondary:hover{border-color:var(--lilac-400);background:var(--lilac-50)}
+
+  /* SECTIONS */
+  section{padding:5rem 2rem}
+  .section-inner{max-width:960px;margin:0 auto}
+  .section-label{
+    font-size:0.78rem;font-weight:600;
+    color:var(--lilac-600);letter-spacing:2px;
+    text-transform:uppercase;margin-bottom:0.5rem;
+  }
+  .section-title{
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem;font-weight:700;
+    color:var(--text-dark);margin-bottom:2.5rem;
+    line-height:1.2;
+  }
+
+  /* SKILLS */
+  #skills{background:var(--lilac-50)}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem}
+  .skill-card{
+    background:white;border-radius:16px;padding:1.5rem;
+    border:1px solid var(--lilac-100);
+    transition:box-shadow 0.2s,transform 0.2s;
+  }
+  .skill-card:hover{box-shadow:0 8px 32px rgba(139,82,232,0.12);transform:translateY(-2px)}
+  .skill-icon{
+    width:44px;height:44px;border-radius:12px;
+    background:var(--lilac-100);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:1rem;font-size:1.3rem;
+  }
+  .skill-card h3{font-size:0.9rem;font-weight:600;color:var(--text-dark);margin-bottom:0.5rem}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{
+    font-size:0.75rem;padding:3px 10px;border-radius:20px;
+    background:var(--lilac-100);color:var(--lilac-800);font-weight:500;
+  }
+
+  /* EXPERIENCE */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;
+    width:2px;background:linear-gradient(to bottom,var(--lilac-300),var(--lilac-100));
+    border-radius:2px;
+  }
+  .timeline-item{position:relative;margin-bottom:2.5rem}
+  .timeline-item::before{
+    content:'';position:absolute;
+    left:-2.45rem;top:6px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--lilac-500);
+    border:3px solid var(--lilac-100);
+    box-shadow:0 0 0 3px var(--lilac-200);
+  }
+  .timeline-date{
+    font-size:0.78rem;font-weight:600;color:var(--lilac-600);
+    letter-spacing:0.5px;margin-bottom:0.4rem;text-transform:uppercase;
+  }
+  .timeline-title{font-size:1.1rem;font-weight:600;color:var(--text-dark);margin-bottom:0.25rem}
+  .timeline-org{font-size:0.9rem;color:var(--text-mid);margin-bottom:0.75rem}
+  .timeline-desc{font-size:0.88rem;color:var(--text-mid);line-height:1.7}
+
+  /* PROJECTS */
+  #projects{background:var(--lilac-50)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+  .project-card{
+    background:white;border-radius:20px;padding:2rem;
+    border:1px solid var(--lilac-100);
+    transition:all 0.25s;position:relative;overflow:hidden;
+  }
+  .project-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--lilac-400),var(--lilac-600));
+  }
+  .project-card:hover{box-shadow:0 12px 40px rgba(139,82,232,0.15);transform:translateY(-3px)}
+  .project-badge{
+    display:inline-block;font-size:0.72rem;font-weight:600;
+    color:var(--lilac-700);background:var(--lilac-100);
+    padding:4px 12px;border-radius:20px;margin-bottom:1rem;letter-spacing:0.3px;
+  }
+  .project-card h3{font-size:1.15rem;font-weight:700;color:var(--text-dark);margin-bottom:0.6rem}
+  .project-card p{font-size:0.875rem;color:var(--text-mid);line-height:1.7;margin-bottom:1rem}
+  .project-stack{display:flex;flex-wrap:wrap;gap:6px}
+  .stack-tag{
+    font-size:0.72rem;padding:3px 9px;border-radius:6px;
+    background:#f0ebff;color:var(--lilac-700);font-weight:500;
+  }
+
+  /* CERTIFICATIONS */
+  .certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .cert-card{
+    display:flex;align-items:flex-start;gap:1rem;
+    background:var(--lilac-50);border-radius:14px;padding:1.25rem;
+    border:1px solid var(--lilac-100);
+  }
+  .cert-icon{
+    width:40px;height:40px;min-width:40px;border-radius:10px;
+    background:var(--lilac-600);
+    display:flex;align-items:center;justify-content:center;
+    color:white;font-size:1.1rem;
+  }
+  .cert-card h3{font-size:0.9rem;font-weight:600;color:var(--text-dark);margin-bottom:0.2rem}
+  .cert-card p{font-size:0.78rem;color:var(--text-light);line-height:1.5}
+
+  /* CONTACT */
+  #contact{background:linear-gradient(135deg,var(--lilac-700),var(--lilac-900));color:white;text-align:center}
+  #contact .section-label{color:var(--lilac-200)}
+  #contact .section-title{color:white;margin-bottom:1rem}
+  .contact-desc{color:var(--lilac-200);font-size:1rem;max-width:480px;margin:0 auto 2.5rem;line-height:1.8}
+  .contact-cards{
+    display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:2.5rem;
+  }
+  .contact-item{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:16px;padding:1.25rem 1.75rem;
+    display:flex;align-items:center;gap:0.75rem;
+    color:white;text-decoration:none;
+    font-size:0.9rem;font-weight:500;
+    transition:background 0.2s;
+  }
+  .contact-item:hover{background:rgba(255,255,255,0.18)}
+  .contact-item span{font-size:1.2rem}
+
+  /* DOWNLOAD RESUME */
+  .resume-download-wrap{margin-top:0.5rem}
+  .btn-download{
+    display:inline-flex;align-items:center;gap:10px;
+    background:white;color:var(--lilac-700);
+    padding:14px 32px;border-radius:50px;
+    font-weight:700;font-size:1rem;
+    box-shadow:0 8px 32px rgba(0,0,0,0.2);
+    text-decoration:none;border:none;cursor:pointer;
+    transition:all 0.2s;
+  }
+  .btn-download:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+  .btn-download svg{width:20px;height:20px}
+
+  /* FOOTER */
+  footer{
+    background:var(--lilac-900);color:var(--lilac-300);
+    text-align:center;padding:1.5rem;font-size:0.82rem;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal{opacity:0;transform:translateY(24px);transition:all 0.6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Meena Murugan</div>
+  <div class="nav-links">
+    <a onclick="scrollTo('about')">About</a>
+    <a onclick="scrollTo('skills')">Skills</a>
+    <a onclick="scrollTo('experience')">Experience</a>
+    <a onclick="scrollTo('projects')">Projects</a>
+    <a onclick="scrollTo('contact')">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-inner">
+    <div class="hero-photo-wrap reveal">
+      <img class="hero-photo" src="photo.jpeg" alt="Meena Murugan" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:230px;height:230px;border-radius:50%;background:var(--lilac-200);align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--lilac-700);border:5px solid white;position:relative;z-index:1">MM</div>
+      <div class="badge-float">B.Sc. IT · Madurai</div>
+    </div>
+    <div class="hero-text reveal" style="transition-delay:0.15s">
+      <div class="section-label">Portfolio</div>
+      <h1>Hello, I'm <span>Meena</span><br>Murugan</h1>
+      <p class="hero-subtitle">IT Graduate · Web Developer · AI Enthusiast</p>
+      <p class="hero-bio">Dynamic and people-oriented graduate with hands-on experience in web development, database management, and AI projects. Passionate about building meaningful technology solutions that make a difference.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" onclick="scrollTo('contact')">✉ Get In Touch</a>
+        <a class="btn-secondary" href="/mnt/user-data/uploads/Meena_Resume.pdf" download="Meena_Murugan_Resume.pdf">⬇ Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label reveal">What I bring</div>
+    <h2 class="section-title reveal">Skills & Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">💻</div>
+        <h3>Programming Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C</span><span class="tag">Java</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.05s">
+        <div class="skill-icon">🗄️</div>
+        <h3>Database Management</h3>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span><span class="tag">SQLite</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.1s">
+        <div class="skill-icon">🛠️</div>
+        <h3>Frameworks & Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">Flask</span><span class="tag">VS Code</span><span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.15s">
+        <div class="skill-icon">📊</div>
+        <h3>Data Libraries</h3>
+        <div class="skill-tags">
+          <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Seaborn</span><span class="tag">Matplotlib</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.2s">
+        <div class="skill-icon">🤝</div>
+        <h3>Soft Skills</h3>
+        <div class="skill-tags">
+          <span class="tag">Communication</span><span class="tag">Problem-Solving</span><span class="tag">Work Ethic</span><span class="tag">Decision-Making</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:0.25s">
+        <div class="skill-icon">🌐</div>
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">English</span><span class="tag">Tamil</span><span class="tag">Hindi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE & EDUCATION -->
+<section id="experience">
+  <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:4rem">
+    <div>
+      <div class="section-label reveal">Work</div>
+      <h2 class="section-title reveal" style="font-size:1.8rem">Experience</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Jun 2023 – Apr 2026</div>
+          <div class="timeline-title">Web Development Intern</div>
+          <div class="timeline-org">Dot Com Infoway (DCI), Madurai</div>
+          <div class="timeline-desc">Built an Online Resume Builder with Flask, SQLite, and Jinja2 templates. Integrated PDF generation with pdfkit and designed responsive multi-page forms.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label reveal">Learning</div>
+      <h2 class="section-title reveal" style="font-size:1.8rem">Education</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Jun 2023 – Apr 2026</div>
+          <div class="timeline-title">B.Sc. Information Technology</div>
+          <div class="timeline-org">Fatima College, Madurai</div>
+          <div class="timeline-desc">Gained strong knowledge in programming, web development, and databases. Participated in 10+ academic competitions including coding challenges and tech quizzes.</div>
+        </div>
+        <div class="timeline-item reveal" style="transition-delay:0.1s">
+          <div class="timeline-date">2022 – 2023</div>
+          <div class="timeline-title">Higher Secondary (Class 12)</div>
+          <div class="timeline-org">SDA Matriculation School, Madurai</div>
+          <div class="timeline-desc">Scored 85% in the Science stream with a perfect 100/100 in Computer Science.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label reveal">What I've built</div>
+    <h2 class="section-title reveal">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-badge">AI · Computer Vision</div>
+        <h3>FoodLens AI</h3>
+        <p>An AI-powered web application that identifies food items from images and generates accurate nutritional information using a trained ResNet18 model classifying 103 food categories, connected to the Spoonacular Nutrition API.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span><span class="stack-tag">Flask</span><span class="stack-tag">ResNet18</span><span class="stack-tag">OpenCV</span><span class="stack-tag">SQLite</span><span class="stack-tag">REST API</span>
+        </div>
+      </div>
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <div class="project-badge">Web Dev · Full Stack</div>
+        <h3>Online Resume Builder</h3>
+        <p>Enables users to enter personal and academic details, select from multiple templates, preview resumes in the browser, and download in PDF format. Features Jinja2 templating and SQLite-backed data storage.</p>
+        <div class="project-stack">
+          <span class="stack-tag">HTML/CSS</span><span class="stack-tag">Python</span><span class="stack-tag">Flask</span><span class="stack-tag">SQLite</span><span class="stack-tag">pdfkit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-inner">
+    <div class="section-label reveal">Credentials</div>
+    <h2 class="section-title reveal">Certifications</h2>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🏅</div>
+        <div>
+          <h3>TCS iON Career Edge</h3>
+          <p>Young Professional · Tata Consultancy Services · 2025</p>
+        </div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.05s">
+        <div class="cert-icon">💬</div>
+        <div>
+          <h3>Communication Skills</h3>
+          <p>TCS iON · Verbal & Non-Verbal Communication · 2025</p>
+        </div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.1s">
+        <div class="cert-icon">🚀</div>
+        <div>
+          <h3>Youth Empowerment Program</h3>
+          <p>CT Academy with HP · 2025 (Completed)</p>
+        </div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.15s">
+        <div class="cert-icon">📝</div>
+        <div>
+          <h3>Hindi Language Certifications</h3>
+          <p>Dakshina Bharat Hindi Prachar Sabha · Prathmic, Madhyama, Rashtra Bhasha</p>
+        </div>
+      </div>
+      <div class="cert-card reveal" style="transition-delay:0.2s">
+        <div class="cert-icon">⌨️</div>
+        <div>
+          <h3>Typewriting English – Lower</h3>
+          <p>Typing speed: 40+ words per minute</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Say Hello</div>
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <p class="contact-desc reveal">I'm actively looking for opportunities in IT. Whether you have a role, a project, or just want to connect — my inbox is always open!</p>
+    <div class="contact-cards reveal">
+      <a class="contact-item" href="mailto:meena20050608@gmail.com">
+        <span>✉️</span> meena20050608@gmail.com
+      </a>
+      <a class="contact-item" href="tel:7708421827">
+        <span>📞</span> +91 7708421827
+      </a>
+      <a class="contact-item" href="https://linkedin.com/in/meena-murugan-2b4044033a" target="_blank">
+        <span>🔗</span> LinkedIn Profile
+      </a>
+    </div>
+    <div class="resume-download-wrap reveal">
+      <a class="btn-download" href="/mnt/user-data/uploads/Meena_Resume.pdf" download="Meena_Murugan_Resume.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download My Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Crafted with 💜 by Meena Murugan · Madurai, Tamil Nadu · 2025</p>
+</footer>
+
+<script>
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible')}
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
